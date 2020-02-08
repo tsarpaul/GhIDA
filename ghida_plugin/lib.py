@@ -273,7 +273,7 @@ def ghidra_headless(address,
                 continue
 
             # User terminated action
-            if idaapi.wasBreak():
+            if idaapi.user_cancelled():
                 # Termiante the process!
                 terminate_process(p.pid)
                 stop = True
@@ -386,7 +386,7 @@ def ghidraaas_checkin(bin_file_path, filename, ghidra_server_url):
             counter += 1
 
             # User terminated action
-            if idaapi.wasBreak():
+            if idaapi.user_cancelled():
                 stop = True
                 print("GhIDA:: [!] Check-in interrupted.")
                 continue
@@ -465,7 +465,7 @@ def ghidraaas_checkout(ghidra_server_url):
             time.sleep(SLEEP_LENGTH)
             counter += 1
 
-            if idaapi.wasBreak():
+            if idaapi.user_cancelled():
                 print("GhIDA:: [!] Check-out interrupted.")
                 stop = True
                 continue
@@ -586,7 +586,7 @@ def ghidraaas_decompile(address,
             time.sleep(SLEEP_LENGTH)
             counter += 1
 
-            if idaapi.wasBreak():
+            if idaapi.user_cancelled():
                 print("GhIDA:: [!] decompilation interrupted.")
                 stop = True
                 continue

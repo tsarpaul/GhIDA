@@ -1119,14 +1119,14 @@ class XmlExporter(IdaXml):
                 startaddr = addr
             has_val = ida_bytes.has_value(idc.get_full_flags(addr))
             if has_val == True:
-                length += self.cbsize
+                length += int(self.cbsize)
             next_address = idc.next_addr(addr)
             if ((has_val == False) or (next_address != addr + 1) or
                     (next_address == end)):
                 if length > 0:
                     offset = binfile.tell()
-                    ida_loader.base2file(binfile.get_fp(), offset, startaddr,
-                                         startaddr + length)
+                    endaddr = startaddr + length
+                    ida_loader.base2file(binfile.get_fp(), offset, startaddr, endaddr)
                     self.start_element(MEMORY_CONTENTS)
                     self.write_address_attribute(START_ADDR, startaddr)
                     self.write_attribute(FILE_NAME, binfilename)
@@ -2152,6 +2152,7 @@ class XmlExporter(IdaXml):
             signedhex: Boolean indicating if hex representation of
                 value is signed.
         """
+        value = int(value)
         if base == 10:
             temp = "%d" % value
         else:
