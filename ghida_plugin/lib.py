@@ -28,7 +28,7 @@ import sys
 import tempfile
 import time
 
-import Queue
+import queue as Queue
 import random
 import requests
 import string
@@ -41,8 +41,8 @@ import idaapi
 import idautils
 import idc
 
-from idaxml import Cancelled
-from idaxml import XmlExporter
+from .idaxml import Cancelled
+from .idaxml import XmlExporter
 
 # This value can be changed
 TIMEOUT = 300

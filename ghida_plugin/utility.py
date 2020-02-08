@@ -27,7 +27,7 @@ import re
 import idaapi
 import idc
 
-from idaxml import SYMBLE_TABLE_DICT
+from .idaxml import SYMBLE_TABLE_DICT
 
 PLUGIN_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
