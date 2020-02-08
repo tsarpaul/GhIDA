@@ -43,6 +43,7 @@ import idc
 
 from .idaxml import Cancelled
 from .idaxml import XmlExporter
+import traceback
 
 # This value can be changed
 TIMEOUT = 300
@@ -72,7 +73,7 @@ def create_random_filename():
     if not GLOBAL_FILENAME:
         letters = [random.choice(string.ascii_letters) for i in range(5)]
         random_string = ''.join(letters)
-        GLOBAL_FILENAME = "%s_%s" % (idautils.GetInputFileMD5(), random_string)
+        GLOBAL_FILENAME = "%s_%s" % (idautils.GetInputFileMD5().hex(), random_string)
     return GLOBAL_FILENAME
 
 
@@ -133,7 +134,12 @@ def export_ida_project_to_xml():
     except Exception:
         ida_kernwin.hide_wait_box()
         msg = "GhIDA:: [!] Exception occurred: XML Exporter failed!"
-        print("\n" + msg + "\n", sys.exc_type, sys.exc_value)
+        
+        excinfo = sys.exc_info()
+        tb = excinfo[2]
+        print("\n" + msg + "\n", excinfo[:2], tb)
+        traceback.print_tb(tb)
+
         idc.warning(msg)
     finally:
         xml.cleanup()

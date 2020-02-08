@@ -623,14 +623,15 @@ class DisasmsHandler(idaapi.action_handler_t):
 
 class DisasmsHooks(idaapi.UI_Hooks):
 
-    def finish_populating_tform_popup(self, form, popup):
+    #def finish_populating_tform_popup(self, form, popup):
+    def finish_populating_widget_popup(self, form, popup):
         # TODO - Attach to the functions view.
-        # if idaapi.get_tform_type(form) == idaapi.BWN_FUNCS:
+        # if idaapi.get_widget_type(form) == idaapi.BWN_FUNCS:
         #     idaapi.attach_action_to_popup(
         #         form, popup, "my:disasmsaction", None)
 
         # Attach to the disassembler view only
-        if idaapi.get_tform_type(form) == idaapi.BWN_DISASMS:
+        if idaapi.get_widget_type(form) == idaapi.BWN_DISASMS:
             idaapi.attach_action_to_popup(
                 form, popup, "my:disasmsaction", None)
             idaapi.attach_action_to_popup(
@@ -647,7 +648,7 @@ def register_handlers():
 
     # Load a custom icon
     icon_path = gl.plugin_resource("ghida.png")
-    icon_data = str(open(icon_path, "rb").read())
+    icon_data = open(icon_path, "rb").read()
     icon_ghida = idaapi.load_custom_icon(data=icon_data)
 
     idaapi.register_action(idaapi.action_desc_t(
@@ -972,8 +973,9 @@ def decompile_function_wrapper(cache_only=False, do_show=True):
             DECOMP_VIEW.add_comments(comment_list)
 
         return
-    except Exception:
+    except Exception as e:
         print("GhIDA:: [!] Decompilation wrapper error")
+        print(str(e))
         idaapi.warning("GhIDA decompilation wrapper error")
 
 
