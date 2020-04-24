@@ -974,10 +974,8 @@ def decompile_function_wrapper(cache_only=False, do_show=True):
 
         return
     except Exception as e:
-        print("GhIDA:: [!] Decompilation wrapper error")
-        print(str(e))
-        idaapi.warning("GhIDA decompilation wrapper error")
-
+        print("GhIDA:: [!] Decompilation wrapper error: {}".format(e))
+        idaapi.warning("GhIDA decompilation wrapper error {}".format(e))
 
 # ------------------------------------------------------------
 #   GHIDRA DECOMPILER PLUGIN
